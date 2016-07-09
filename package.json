@@ -4,7 +4,6 @@
   "author": "Philippe Ozil",
   "description": "Node client library for Salesforce Force.com services (OAuth2 and Data)",
   "license": "see LICENSE file",
-  "private": true,
   "main": "src/salesforce-client",
   "dependencies": {
     "request": "~2.72.0",
