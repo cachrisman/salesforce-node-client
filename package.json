@@ -1,0 +1,36 @@
+{
+  "name": "salesforce-node-client",
+  "version": "1.0.0",
+  "author": "Philippe Ozil",
+  "description": "Node client library for Salesforce Force.com services (OAuth2 and Data)",
+  "license": "see LICENSE file",
+  "private": true,
+  "main": "src/salesforce-client",
+  "dependencies": {
+    "request": "~2.72.0",
+    "underscore": "~1.8.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "nock": "^8.0.0",
+    "should": "^9.0.2"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --recursive"
+  },
+  "keywords": [
+    "Node",
+    "Salesforce",
+    "Force.com",
+    "OAuth2",
+    "API"
+  ],
+  "repository": "pozil/salesforce-node-client",
+  "bugs": {
+    "url": "https://github.com/pozil/salesforce-node-client/issues"
+  },
+  "homepage": "https://github.com/pozil/salesforce-node-client",
+  "engines": {
+    "node": "6.2.x"
+  }
+}
