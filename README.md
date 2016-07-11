@@ -80,7 +80,7 @@ var sfdcConfig = {
 
 Then, create an instance of the service with the following code:
 ```js
-SalesforceClient = require('salesforce-node-client');
+var SalesforceClient = require('salesforce-node-client');
 
 // Instantiate Salesforce client with configuration
 var sfdc = new SalesforceClient(sfdcConfig);
