@@ -34,8 +34,8 @@ $ npm install salesforce-node-client --save
 
 Before being able to interact with Force.com with your application, you will have to declare it as a connected application:
 
-1. Log in your Salesforce account
-2. Access the Setup
+1. Log in your Salesforce administrator account
+2. Access Setup
 3. Type 'App' in the quick find box and navigate to Build > Create > Apps
 4. Scroll down and click 'New' in the 'Connected Apps' section
 5. Fill in the required fields in the 'Basic Information' section
