@@ -78,14 +78,40 @@ Once this is done, you may access the underlying client services with these prop
 Prior to performing any operation, you will need to authenticate with Force.com.
 
 There are two authentication methods available:
-- Standard user authentication that requires a browser user interface.
-- Password authentication for API operations that do not provide a UI.
+- Standard user authentication (requires a browser).
+- Password authentication for API headless operations (that do not provide a UI).
 
-Work in progress...
+For both authentication modes, you first need to declare your application as a connected application in Salesforce.
 
+#### Declaring a connected application in Salesforce.
+1. Log in your Saleforce account
+2. Access the Setup
+3. Type 'App' in the quick find box and navigate to Build > Create > Apps
+4. Scroll down and click 'New' in the 'Connected Apps' section
+5. Fill in the required fields in the 'Basic Information' section
+6. Check 'Enable OAuth Settings', this will open some aditional settings
+7. Provide a callback URL (this is an endpoint belonging to your application that should match `auth.callbackUrl` specified in the client configuration)
+8. Select your OAuth scope ('api' is a good start)
+9. Save your settings
+
+#### Standard user authentication mode
+The first step in standard user authentication is to generate the authorization URL and redirect the user to it:
+```js
+// Redirect to Salesforce login/authorization page
+var uri = sfdc.auth.getAuthorizationUrl({scope: 'api'});
+return response.redirect(uri);
+```
+
+The user will authorize your application to connect to Salesforce and will be redirected to the `auth.callbackUrl` URL you specified in the client configuration.<br/>
+**Important:** the callback URL you specified in the client configuration MUST match your connected applications settings in Salesforce.
+
+*Work in progress...*
+
+#### Password authentication mode
+*Work in progress...*
 
 ### Accessing & modifying Force.com data
-Work in progress...
+*Work in progress...*
 
 ## Sample application
 A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).<br/>
