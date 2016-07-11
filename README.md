@@ -95,7 +95,7 @@ For both authentication modes, you first need to declare your application as a c
 9. Save your settings
 
 #### Standard user authentication mode
-The first step in standard user authentication is to generate the authorization URL and redirect the user to it:
+The first step in standard user authentication is to generate the authorization URL with your OAuth scope(s) (API only in in this example) and redirect the user to it:
 ```js
 // Redirect to Salesforce login/authorization page
 var uri = sfdc.auth.getAuthorizationUrl({scope: 'api'});
@@ -105,10 +105,35 @@ return response.redirect(uri);
 The user will authorize your application to connect to Salesforce and will be redirected to the `auth.callbackUrl` URL you specified in the client configuration.<br/>
 **Important:** the callback URL you specified in the client configuration MUST match your connected applications settings in Salesforce.
 
+The user will be redirected to that call back URL with an authorization code passed as a query parameter.<br/>
+The Node client library will use that code (`request.query.code` in the following example) to authenticate with Force.com.
+The, once the authentication is completed:
+1. persist the reponse payload in a server-side session (you will need this for all further operations)
+2. redirect the user to your application's home page
+
+```js
+// Authenticate with Force.com
+sfdc.auth.authenticate({'code': request.query.code}, function(error, payload) {
+	// Store the payload content in a server-side session
+	// Redirect your user to your app's home page
+}
+```
 *Work in progress...*
 
 #### Password authentication mode
 *Work in progress...*
+
+
+#### Logging out
+You may log out a user of your application by revoking his access token `accessToken` with the following code:
+```js
+// Revokes your user's access to Force.com
+sfdc.auth.revoke({'token': accessToken}, function(error) {
+	// Do something
+}
+```
+**Important:** revoking a user's access token logs the user out of your application but not Salesforce.
+
 
 ### Accessing & modifying Force.com data
 *Work in progress...*
