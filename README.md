@@ -9,7 +9,7 @@
 	- Declaring your application in Salesforce
 	- Configuring and instantiating the client
 	- Authenticating
-	- Accessing & modifying Force.com data
+	- Interacting with Force.com data
 - [Sample application](#sample-application)
 
 # About
@@ -161,7 +161,7 @@ sfdc.auth.revoke({'token': accessToken}, function(error) {
 **Important:** revoking a user's access token logs the user out of your application but not Salesforce.
 
 
-### Accessing & modifying Force.com data
+### Interacting with Force.com data
 Once you have authenticated, you may perform various operations on Force.com.
 
 For all operations, you will need the response payload of `auth.authenticate` or `auth.password`.
