@@ -6,6 +6,7 @@
 - [About](#about)
 - [Installation](#installation)
 - [Documentation](#documentation)
+	- Declaring your application in Salesforce
 	- Configuring and instantiating the client
 	- Authenticating
 	- Accessing & modifying Force.com data
@@ -28,6 +29,21 @@ $ npm install salesforce-node-client --save
 ```
 
 ## Documentation
+
+### Declaring your application in Salesforce
+
+Before being able to interact with Force.com with your application, you will have to declare it as a connected application:
+
+1. Log in your Saleforce account
+2. Access the Setup
+3. Type 'App' in the quick find box and navigate to Build > Create > Apps
+4. Scroll down and click 'New' in the 'Connected Apps' section
+5. Fill in the required fields in the 'Basic Information' section
+6. Check 'Enable OAuth Settings', this will open some aditional settings
+7. Provide a callback URL (this is an endpoint belonging to your application that should match `auth.callbackUrl` specified in the client configuration later)
+8. Select your OAuth scope(s) ('api' is a good start)
+9. Save your settings
+
 
 ### Configuring and  instantiating the client
 The first thing that you need to do to use this project is to set its configuration and create a client instance.
@@ -74,25 +90,14 @@ Once this is done, you may access the underlying client services with these prop
 - `auth` for the authentication servcie
 - `data` for the data service
 
+
 ### Authenticating
 Prior to performing any operation, you will need to authenticate with Force.com.
 
 There are two authentication methods available:
 - Standard user authentication (requires a browser).
-- Password authentication for API headless operations (that do not provide a UI).
+- Password authentication for non-browser operations such as programmatic access.
 
-For both authentication modes, you first need to declare your application as a connected application in Salesforce.
-
-#### Declaring a connected application in Salesforce.
-1. Log in your Saleforce account
-2. Access the Setup
-3. Type 'App' in the quick find box and navigate to Build > Create > Apps
-4. Scroll down and click 'New' in the 'Connected Apps' section
-5. Fill in the required fields in the 'Basic Information' section
-6. Check 'Enable OAuth Settings', this will open some aditional settings
-7. Provide a callback URL (this is an endpoint belonging to your application that should match `auth.callbackUrl` specified in the client configuration)
-8. Select your OAuth scope ('api' is a good start)
-9. Save your settings
 
 #### Standard user authentication mode
 The first step in standard user authentication is to generate the authorization URL with your OAuth scope(s) (API only in in this example) and redirect the user to it:
@@ -118,10 +123,31 @@ sfdc.auth.authenticate({'code': request.query.code}, function(error, payload) {
 	// Redirect your user to your app's home page
 }
 ```
-*Work in progress...*
+
+The `authenticate` response `payload` is an object with the following format:
+
+| Attribute     | Description |
+| ------------- |-------------|
+| id            | URL that represents logged in user |
+| issued_at     | Timestamp of token creation |
+| refresh_token | Long-lived token that may be used to obtain a fresh access token on expiry of the access token |
+| instance_url  | URL that identifies the Salesforce instance to which API calls should be sent |
+| access_token  | Short-lived access token |
+| signature     | Hash used to sign requests sent to Force.com (the client library will take care of that for you) |
+
 
 #### Password authentication mode
-*Work in progress...*
+In order to perform password authentication, use the following:
+```js
+// Authenticate with Force.com
+sfdc.auth.password({
+	'username': 'the user name',
+	'password': 'the user password',
+}, function(error, payload) {
+	// Store the payload content in a server-side session
+	// Do something
+}
+```
 
 
 #### Logging out
@@ -136,7 +162,40 @@ sfdc.auth.revoke({'token': accessToken}, function(error) {
 
 
 ### Accessing & modifying Force.com data
-*Work in progress...*
+Once you have authenticated, you may perfom various operations on Force.com.
+
+For all operations, you will need the response payload of `auth.authenticate` or `auth.password`.
+We will refer to it as `sfdcSession`.
+
+#### Interacting with Force.com data
+Interactions with Force.com data performed with this client handled with REST APIs in two steps.
+
+First, prepare the request options and sign it with the client by calling `data.createDataRequest`.
+To do so, you will need to provide two paramters:
+- `sfdcSession` the session information
+- `resourceUrlSuffix` a string containing the location of the REST resource you wish to interact with (you may use the [REST Explorer](https://workbench.developerforce.com/restExplorer.php) from the Workbench to get the right URL).
+
+Finally, send the request with the HTTP verb of your choice and process the response.
+
+```js
+// Prepare Force.com request options with a SOQL query that lists users
+var query = encodeURI('SELECT Id, Name FROM User LIMIT 10');
+var apiRequestOptions = sfdc.data.createDataRequest(sfdcSession, 'query?q='+ query);
+// Send an HTTP GET request with our options
+httpClient.get(apiRequestOptions, function (error, payload) {
+	// Do something
+}
+```
+
+#### Retrieving the currently logged user
+As a conviniency, you can retrieve the currently logged in user with this call:
+```js
+// Request logged user info
+sfdc.data.getLoggedUser(sfdcSession, function (error, userData) {
+	// Do something
+}
+```
+
 
 ## Sample application
 A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).<br/>
