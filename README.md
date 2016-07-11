@@ -29,5 +29,5 @@ Work in progress...
 
 
 ## Sample application
-A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).
-Event if you are not familiar with React.js, the Node.js backend code is worth looking at.
+A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).<br/>
+Even if you are not familiar with React.js, the Node.js backend code is worth looking at.
