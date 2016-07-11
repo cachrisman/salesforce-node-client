@@ -15,7 +15,7 @@
 # About
 Node.js client library for Salesforce Force.com services.
 
-This libary provices access to 2 main Force.com services:
+This library provides access to 2 main Force.com services:
 - Authentication through OAuth 2.0
 - Data through Force.com REST APIs
 
@@ -34,12 +34,12 @@ $ npm install salesforce-node-client --save
 
 Before being able to interact with Force.com with your application, you will have to declare it as a connected application:
 
-1. Log in your Saleforce account
+1. Log in your Salesforce account
 2. Access the Setup
 3. Type 'App' in the quick find box and navigate to Build > Create > Apps
 4. Scroll down and click 'New' in the 'Connected Apps' section
 5. Fill in the required fields in the 'Basic Information' section
-6. Check 'Enable OAuth Settings', this will open some aditional settings
+6. Check 'Enable OAuth Settings', this will open some additional settings
 7. Provide a callback URL (this is an endpoint belonging to your application that should match `auth.callbackUrl` specified in the client configuration later)
 8. Select your OAuth scope(s) ('api' is a good start)
 9. Save your settings
@@ -87,7 +87,7 @@ var sfdc = new SalesforceClient(sfdcConfig);
 ```
 
 Once this is done, you may access the underlying client services with these properties:
-- `auth` for the authentication servcie
+- `auth` for the authentication service
 - `data` for the data service
 
 
@@ -113,7 +113,7 @@ The user will authorize your application to connect to Salesforce and will be re
 The user will be redirected to that call back URL with an authorization code passed as a query parameter.<br/>
 The Node client library will use that code (`request.query.code` in the following example) to authenticate with Force.com.
 The, once the authentication is completed:
-1. persist the reponse payload in a server-side session (you will need this for all further operations)
+1. persist the response payload in a server-side session (you will need this for all further operations)
 2. redirect the user to your application's home page
 
 ```js
@@ -162,7 +162,7 @@ sfdc.auth.revoke({'token': accessToken}, function(error) {
 
 
 ### Accessing & modifying Force.com data
-Once you have authenticated, you may perfom various operations on Force.com.
+Once you have authenticated, you may perform various operations on Force.com.
 
 For all operations, you will need the response payload of `auth.authenticate` or `auth.password`.
 We will refer to it as `sfdcSession`.
@@ -188,7 +188,7 @@ httpClient.get(apiRequestOptions, function (error, payload) {
 ```
 
 #### Retrieving the currently logged user
-As a conviniency, you can retrieve the currently logged in user with this call:
+As a convenience, you can retrieve the currently logged in user with this call:
 ```js
 // Request logged user info
 sfdc.data.getLoggedUser(sfdcSession, function (error, userData) {
