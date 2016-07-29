@@ -10,7 +10,6 @@
 	- Configuring and instantiating the client
 	- Authenticating
 	- Interacting with Force.com data
-- [Sample application](#sample-application)
 
 # About
 Node.js client library for Salesforce Force.com services.
@@ -19,7 +18,12 @@ This library provides access to 2 main Force.com services:
 - Authentication through OAuth 2.0
 - Data through Force.com REST APIs
 
+**Credit**<br/>
 The authentication service of this project is largely inspired by [cangencer's project](https://github.com/cangencer/salesforce-oauth2).
+
+**Sample application**<br/>
+A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).<br/>
+Even if you are not familiar with React.js, the Node.js backend code is worth looking at.
 
 
 ## Installation
@@ -195,8 +199,3 @@ sfdc.data.getLoggedUser(sfdcSession, function (error, userData) {
 	// Do something
 }
 ```
-
-
-## Sample application
-A sample React.js application that integrates with Salesforce using this client can be found in [this repository](https://github.com/pozil/salesforce-react-integration).<br/>
-Even if you are not familiar with React.js, the Node.js backend code is worth looking at.
