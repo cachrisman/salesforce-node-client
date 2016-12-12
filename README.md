@@ -18,6 +18,8 @@ This library provides access to 2 main Force.com services:
 - Authentication through OAuth 2.0
 - Data through Force.com REST APIs
 
+This client is provided “as is“ without any warranty or support. Salesforce does not officially endorse it.
+
 **Credit**<br/>
 The authentication service of this project is largely inspired by [cangencer's project](https://github.com/cangencer/salesforce-oauth2).
 
