@@ -1,5 +1,6 @@
 var OAuth2Service = require('./services/oauth2');
 var DataService = require('./services/data');
+var ApexRestService = require('./services/apexrest');
 
 /**
 *    Instantiates Salesforce client with provided configuration
