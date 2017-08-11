@@ -10,6 +10,7 @@
 	- Configuring and instantiating the client
 	- Authenticating
 	- Interacting with Force.com data
+	- Interacting with Apex REST resources
 
 # About
 Node.js client library for Salesforce Force.com services.
@@ -198,6 +199,17 @@ As a convenience, you can retrieve the currently logged in user with this call:
 ```js
 // Request logged user info
 sfdc.data.getLoggedUser(sfdcSession, function (error, userData) {
+	// Do something
+}
+```
+
+### Interacting with Apex REST resources
+Apex REST resources can be called in the following way:
+```js
+// Builds a REST query to a custom Apex resource
+var apiRequestOptions = sfdc.apex.createApexRequest(sfdcSession, 'MyCustomApexResource/001B000000RS9WWIA1');
+// Send an HTTP GET request with our options
+httpClient.get(apiRequestOptions, function (error, payload) {
 	// Do something
 }
 ```
