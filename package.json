@@ -6,7 +6,7 @@
   "license": "see LICENSE file",
   "main": "src/salesforce-client",
   "dependencies": {
-    "request": "~2.72.0",
+    "request": "~2.81.0",
     "underscore": "~1.8.3"
   },
   "devDependencies": {
