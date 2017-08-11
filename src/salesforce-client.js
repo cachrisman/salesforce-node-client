@@ -11,6 +11,7 @@ var SalesforceClient = function (configuration) {
 
   this.auth = new OAuth2Service(configuration.auth);
   this.data = new DataService(configuration.data);
+  this.apex = new ApexRestService();
 };
 
 
