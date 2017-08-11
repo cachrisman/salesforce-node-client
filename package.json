@@ -1,6 +1,6 @@
 {
   "name": "salesforce-node-client",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "Philippe Ozil",
   "description": "Node client library for Salesforce Force.com services (OAuth2, Data and Apex REST)",
   "license": "see LICENSE file",
