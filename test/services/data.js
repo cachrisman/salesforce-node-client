@@ -13,24 +13,6 @@ const MOCK_SESSION =  {
 };
 
 
-describe('when building DataService', function () {
-
-  // Test mandatory configuration
-  it('should require configuration', function () {
-    (function() {
-      new DataService();
-    }).should.throw('Missing configuration for Salesforce Data service');
-  });
-
-  // Test mandatory configuration attributes
-  it('should require apiVersion in configuration', function () {
-    (function() {
-      new DataService({});
-    }).should.throw('Missing configuration for Salesforce Data service: apiVersion');
-  });
-});
-
-
 describe('when calling DataService.getLoggedUser', function () {
 
   it('should send the right request and receive the right response', function (done) {

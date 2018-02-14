@@ -17,10 +17,6 @@ var config = null;
 *    apiVersion: Force.com API version
 */
 const DataService = function (configuration) {
-  if (!configuration)
-    throw new Error('Missing configuration for Salesforce Data service');
-  if (!configuration.apiVersion)
-    throw new Error('Missing configuration for Salesforce Data service: apiVersion');
   config = configuration;
 };
 

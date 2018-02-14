@@ -10,11 +10,6 @@ const qs = require('querystring'),
   httpClient = require('request'),
   crypto = require('crypto');
 
-
-// Service configuration
-var config = null;
-
-
 // OAuth resources URLs
 const resourceUrlSuffix = {
   authorize : 'authorize',
@@ -25,6 +20,8 @@ const resourceUrlSuffix = {
 // Try to use proxy if available
 const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
 
+var config = null;
+
 /**
 *    Instantiates OAuth2 service with provided configuration
 *    @configuration should contain:
@@ -34,9 +31,6 @@ const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
 *      consumerSecret: OAuth secret key used for Force.com authentication (retrieved from SFDC setup)
 */
 const OAuth2Service = function (configuration) {
-  if (!configuration)
-    throw new Error('Missing configuration for Salesforce OAuth2 service');
-  assertConfigAttributesAreSet(configuration, ['domain', 'callbackUrl', 'consumerKey', 'consumerSecret']);
   config = configuration;
 };
 
@@ -48,13 +42,13 @@ const OAuth2Service = function (configuration) {
 *    For a full list of parameters see http://wiki.developerforce.com/page/Digging_Deeper_into_OAuth_2.0_on_Force.com
 */
 OAuth2Service.prototype.getAuthorizationUrl = function (options) {
-  options = _.extend({
+  const extendedOptions = _.extend({
     'client_id': config.consumerKey,
     'redirect_uri': config.callbackUrl,
     'response_type': 'code'
   }, options);
 
-  return buildServiceUrl(resourceUrlSuffix.authorize, options);
+  return buildServiceUrl(resourceUrlSuffix.authorize, extendedOptions);
 };
 
 /**
@@ -65,13 +59,13 @@ OAuth2Service.prototype.getAuthorizationUrl = function (options) {
 OAuth2Service.prototype.authenticate = function (options, callback) {
   if (!options.code)
     throw new Error('Missing authorization code');
-  options = _.extend({
+  const extendedOptions = _.extend({
     'client_id': config.consumerKey,
     'client_secret': config.consumerSecret,
     'redirect_uri': config.callbackUrl,
     'grant_type': 'authorization_code'
   }, options);
-  callService(resourceUrlSuffix.token, options, callback);
+  callService(resourceUrlSuffix.token, extendedOptions, callback);
 
   /*
   The reponse payload should contain the following fields:
@@ -113,12 +107,12 @@ OAuth2Service.prototype.authenticate = function (options, callback) {
 *              the password.
 */
 OAuth2Service.prototype.password = function(options, callback) {
-  options = _.extend({
+  const extendedOptions = _.extend({
     'client_id': config.consumerKey,
     'client_secret': config.consumerSecret,
     'grant_type': 'password'
   }, options);
-  callService(resourceUrlSuffix.token, options, callback);
+  callService(resourceUrlSuffix.token, extendedOptions, callback);
 }
 
 /**
@@ -127,13 +121,13 @@ OAuth2Service.prototype.password = function(options, callback) {
 *    refresh_token: the refresh token
 */
 OAuth2Service.prototype.refresh = function (options, callback) {
-  options = _.extend({
+  const extendedOptions = _.extend({
     'client_id': config.consumerKey,
     'client_secret': config.consumerSecret,
     'redirect_uri': config.callbackUrl,
     'grant_type': 'refresh_token'
   }, options);
-  callService(resourceUrlSuffix.token, options, callback);
+  callService(resourceUrlSuffix.token, extendedOptions, callback);
 }
 
 /**
@@ -225,17 +219,6 @@ function verifySignature(payload) {
 
   if (hmac.digest('base64') !== payload.signature)
     throw new Error('The signature could not be verified.');
-}
-
-/**
-*  Asserts that the provided configuration attribute are set.
-*  Throws an exception if not.
-*/
-function assertConfigAttributesAreSet(configuration, attributes) {
-  attributes.forEach(function (attribute) {
-    if (!configuration[attribute])
-      throw new Error('Missing configuration for Salesforce OAuth2 service: '+ attribute);
-  });
 }
 
 // Export service in module

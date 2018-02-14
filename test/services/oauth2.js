@@ -13,32 +13,6 @@ const SAMPLE_SERVICE = new OAuth2Service({
 });
 
 
-describe('when building OAuth2Service', function () {
-
-  // Test mandatory configuration
-  it('should require configuration', function () {
-    (function() {
-      new OAuth2Service();
-    }).should.throw('Missing configuration for Salesforce OAuth2 service');
-  });
-
-  // Test mandatory configuration attributes
-  const configAttributeTests = [
-    {attribute: 'domain', config: {}},
-    {attribute: 'callbackUrl', config: {domain: 'd'}},
-    {attribute: 'consumerKey', config: {domain: 'd', callbackUrl: 'ca'}},
-    {attribute: 'consumerSecret', config: {domain: 'd', callbackUrl: 'ca', consumerKey: 'co'}},
-  ]
-  configAttributeTests.forEach(function(test) {
-    it('should require '+ test.attribute +' in configuration', function () {
-      (function() {
-        new OAuth2Service(test.config);
-      }).should.throw('Missing configuration for Salesforce OAuth2 service: '+ test.attribute);
-    });
-  });
-});
-
-
 describe('when calling OAuth2Service.getAuthorizationUrl', function () {
 
   it('should return the correct URL', function () {
