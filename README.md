@@ -12,7 +12,7 @@
 	- Interacting with Salesforce data
 	- Interacting with Apex REST resources
 - [Changelog](#changelog)
-  - v2.0.0
+  - v1.2.0
 
 # About
 Node.js client library for the Salesforce Platform.
@@ -226,8 +226,8 @@ httpClient.get(apiRequestOptions, function (error, payload) {
 
 ## Changelog
 
-### v2.0.0
-v2.x is backward compatible with v1.x but drops support for Node 5
+### v1.2.0
+v1.2.x is backward compatible with v1.1.x but drops support for Node 5
 
 Changes:
 - Added new configuration options (flat configuration object or environment variable configuration)

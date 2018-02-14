@@ -14,11 +14,11 @@ const OAuth2Service = require('./services/oauth2'),
 */
 const SalesforceClient = function (configuration) {
   let extendedConfig = {};
-  if (typeof configuration === 'undefined') { // Support v2 env configuration
+  if (typeof configuration === 'undefined') { // Support env configuration
     extendedConfig = process.env;
-  } else if (typeof configuration['auth'] !== 'undefined' && typeof configuration['data'] !== 'undefined') { // Support v1 split configuration
+  } else if (typeof configuration['auth'] !== 'undefined' && typeof configuration['data'] !== 'undefined') { // Support legacy (v1.1) split configuration
     extendedConfig = _.extend(extendedConfig, configuration.auth, configuration.data);
-  } else { // Support v2 flat configuration
+  } else { // Support flat configuration
     extendedConfig = configuration;
   }
 

@@ -9,7 +9,7 @@ describe('when building SalesforceClient', function () {
       }).should.throw('Missing configuration attribute for Salesforce client: domain');
     });
 
-    it('should support v1 split configuration', function () {
+    it('should support legacy (v1.1) split configuration', function () {
       const v1Config = {
         auth: {
           domain: 'https://testDomain.com',
@@ -25,8 +25,8 @@ describe('when building SalesforceClient', function () {
       new SalesforceClient(v1Config);
     });
 
-    it('should support v2 flat configuration', function () {
-      const v2Config = {
+    it('should support flat configuration', function () {
+      const config = {
         domain: 'https://testDomain.com',
         callbackUrl: 'testCallbackUrl',
         consumerKey: 'testConsumerKey',
@@ -34,10 +34,10 @@ describe('when building SalesforceClient', function () {
         apiVersion: 'testApiVersion'
       };
 
-      new SalesforceClient(v2Config);
+      new SalesforceClient(config);
     });
 
-    it('should support v2 env configuration', function () {
+    it('should support env configuration', function () {
       process.env.domain = 'https://testDomain.com';
       process.env.callbackUrl = 'testCallbackUrl';
       process.env.consumerKey = 'testConsumerKey';
