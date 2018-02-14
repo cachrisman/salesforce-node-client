@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/pozil/salesforce-node-client.svg?branch=master)](https://travis-ci.org/pozil/salesforce-node-client)
-[![Coverage Status](https://coveralls.io/repos/github/pozil/salesforce-node-client/badge.svg?branch=master)](https://coveralls.io/github/pozil/salesforce-node-client?branch=master)
 
 # Salesforce Node Client
 
