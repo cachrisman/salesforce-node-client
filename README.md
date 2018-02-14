@@ -11,6 +11,7 @@
 	- Authenticating
 	- Interacting with Force.com data
 	- Interacting with Apex REST resources
+- [Changelog](#changelog)
 
 # About
 Node.js client library for Salesforce Force.com services.
@@ -52,51 +53,58 @@ Before being able to interact with Force.com with your application, you will hav
 9. Save your settings
 
 
-### Configuring and  instantiating the client
+### Configuring and instantiating the client
 The first thing that you need to do to use this project is to set its configuration and create a client instance.
 
-To do so, create a configuration object with this structure:
+There are two options to configure the client:
+
+**Option 1: instantiating the client with a configuration object**
 ```js
+const SalesforceClient = require('salesforce-node-client');
+
 // Salesforce client settings for Force.com connection
-var sfdcConfig = {
-  // OAuth2 service
-  auth : {
-    // OAuth authentication domain
-    // For production or DE use
-    domain : 'https://login.salesforce.com',
-    // For sandbox use
-    //domain : 'https://test.salesforce.com',
+const sfdcConfig = {
+  // OAuth authentication domain
+  // For production or DE use
+  domain: 'https://login.salesforce.com',
+  // For sandbox use
+  //domain : 'https://test.salesforce.com',
 
-    // URL called by Force.com after authorization and used to extract an authorization code.
-    // This should point to your app and match the value configured in your App in SFDC setup)
-    callbackUrl : 'http://localhost:3000/auth/callback',
+  // URL called by Force.com after authorization and used to extract an authorization code.
+  // This should point to your app and match the value configured in your App in SFDC setup)
+  callbackUrl: 'http://localhost:3000/auth/callback',
 
-    // Set of secret keys that allow your app to authenticate with Force.com
-    // These values are retrieved from your App configuration in SFDC setup.
-    // NEVER share them with a client.
-    consumerKey : 'your consumer key',
-    consumerSecret : 'your consumer secret key',
-  },
-  // Data service
-  data : {
-    // Force.com API version
-    apiVersion : 'v41.0'
-  }
+  // Set of secret keys that allow your app to authenticate with Force.com
+  // These values are retrieved from your App configuration in SFDC setup.
+  // NEVER share them with a client.
+  consumerKey: 'your consumer key',
+  consumerSecret: 'your consumer secret key',
+
+  // Force.com API version
+  apiVersion: 'v41.0'
 };
-```
-
-Then, create an instance of the service with the following code:
-```js
-var SalesforceClient = require('salesforce-node-client');
 
 // Instantiate Salesforce client with configuration
-var sfdc = new SalesforceClient(sfdcConfig);
+const sfdcClient = new SalesforceClient(sfdcConfig);
 ```
 
-Once this is done, you may access the underlying client services with these properties:
+**Option 2: instantiating the client with Node.js environment variables**
+
+Ensure that the Node.js environment variables (`process.env`) contains the same keys/values as the `sfdcConfig` object in option 1 before calling the client constructor.
+You can set environment variables in several ways but I recommend storring them in a `.env` file and loading them with [dotenv](https://www.npmjs.com/package/dotenv) when the server starts.
+```js
+const SalesforceClient = require('salesforce-node-client');
+
+// Instantiate Salesforce client with Node.js environment variables.
+// It's your responsibility to set those ahead of this call or you will get an error.
+const sfdcClient = new SalesforceClient();
+```
+
+
+Once the client is instantiated, you may access the underlying client services with these properties:
 - `auth` for the authentication service
 - `data` for the data service
-
+- `apex` for the apex REST service
 
 ### Authenticating
 Prior to performing any operation, you will need to authenticate with Force.com.
@@ -213,3 +221,12 @@ httpClient.get(apiRequestOptions, function (error, payload) {
 	// Do something
 }
 ```
+
+## Changelog
+
+### v2.0.0
+v2.x is backward compatible with v1.x but drops support for Node 5
+
+Changes:
+- Added new configuration options (flat configuration object or env variable configuration)
+- Added Travis CI tests running on Node 7 to 9
