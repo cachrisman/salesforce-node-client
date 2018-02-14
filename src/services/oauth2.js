@@ -5,7 +5,7 @@
 */
 
 // Dependencies
-var qs = require('querystring'),
+const qs = require('querystring'),
   _ = require('underscore'),
   httpClient = require('request'),
   crypto = require('crypto');
@@ -16,14 +16,14 @@ var config = null;
 
 
 // OAuth resources URLs
-var resourceUrlSuffix = {
+const resourceUrlSuffix = {
   authorize : 'authorize',
   token : 'token',
   revoke : 'revoke'
 }
 
 // Try to use proxy if available
-var proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
+const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
 
 /**
 *    Instantiates OAuth2 service with provided configuration
@@ -33,7 +33,7 @@ var proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy;
 *      consumerKey: OAuth consumuer key used for Force.com authentication (retrieved from SFDC setup)
 *      consumerSecret: OAuth secret key used for Force.com authentication (retrieved from SFDC setup)
 */
-var OAuth2Service = function (configuration) {
+const OAuth2Service = function (configuration) {
   if (!configuration)
     throw new Error('Missing configuration for Salesforce OAuth2 service');
   assertConfigAttributesAreSet(configuration, ['domain', 'callbackUrl', 'consumerKey', 'consumerSecret']);
@@ -145,7 +145,7 @@ OAuth2Service.prototype.revoke = function (options, callback) {
   if (!options.token)
     throw new Error('Missing token.');
   // Special service call: not using callService function as response is ignored
-  var uri = buildServiceUrl(resourceUrlSuffix.revoke, options);
+  const uri = buildServiceUrl(resourceUrlSuffix.revoke, options);
   return httpClient.post({
     url: uri,
     proxy: proxyUrl
@@ -172,7 +172,7 @@ OAuth2Service.prototype.revoke = function (options, callback) {
 *  @callback function called when response is received
 */
 function callService(serviceUrl, options, callback) {
-  var uri = buildServiceUrl(serviceUrl, options);
+  const uri = buildServiceUrl(serviceUrl, options);
 
   httpClient.post({
     url: uri,
@@ -190,7 +190,7 @@ function callService(serviceUrl, options, callback) {
     }
     // Parse & validate response then return payload in callback
     try {
-      var payload = JSON.parse(response.body);
+      const payload = JSON.parse(response.body);
       verifySignature(payload);
       return callback(null, payload);
     } catch (e) {
@@ -219,7 +219,7 @@ function verifySignature(payload) {
   if (!payload || !payload.signature)
     throw new Error('Missing payload signature.');
 
-  var hmac = crypto.createHmac('sha256', config.consumerSecret);
+  const hmac = crypto.createHmac('sha256', config.consumerSecret);
   hmac.update(payload.id);
   hmac.update(payload.issued_at);
 

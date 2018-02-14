@@ -1,6 +1,6 @@
-var should = require('should');
+const should = require('should');
 
-var SalesforceClient = require('../src/salesforce-client');
+const SalesforceClient = require('../src/salesforce-client');
 
 describe('when building SalesforceClient', function () {
     it('should require configuration', function () {
