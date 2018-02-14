@@ -1,51 +1,31 @@
-var should = require('should'),
-  _ = require('underscore'),
+const should = require('should'),
   nock = require('nock');
 
-var DataService = require('../../src/services/data');
+const DataService = require('../../src/services/data');
 
-function getSampleService() {
-  return new DataService({apiVersion: 'testApiVersion'});
-}
-
-function getMockSession() {
-  return {id: 'https://domain/testId', instance_url: 'testInstanceUrl', access_token: 'testAccessTocken', apiVersion: 'testApiVersion'};
-}
-
-
-describe('when building DataService', function () {
-
-  // Test mandatory configuration
-  it('should require configuration', function () {
-    (function() {
-      new DataService();
-    }).should.throw('Missing configuration for Salesforce Data service');
-  });
-
-  // Test mandatory configuration attributes
-  it('should require apiVersion in configuration', function () {
-    (function() {
-      new DataService({});
-    }).should.throw('Missing configuration for Salesforce Data service: apiVersion');
-  });
-});
+// Shared test data
+const SAMPLE_SERVICE = new DataService({apiVersion: 'testApiVersion'});
+const MOCK_SESSION =  {
+  id: 'https://testDomain.com/testId',
+  instance_url: 'testInstanceUrl',
+  access_token: 'testAccessTocken',
+  apiVersion: 'testApiVersion'
+};
 
 
 describe('when calling DataService.getLoggedUser', function () {
 
   it('should send the right request and receive the right response', function (done) {
-    var service = getSampleService();
-    var mockSession = getMockSession();
-    var mockResponse = {display_name: 'testUserName'};
+    const mockResponse = {display_name: 'testUserName'};
 
-    var server = nock('https://domain')
+    const server = nock('https://testDomain.com')
       .matchHeader('Authorization', 'Bearer testAccessTocken')
       .get('/testId')
       .reply(200, mockResponse);
 
-    service.getLoggedUser(mockSession, function(error, payload) {
+	  SAMPLE_SERVICE.getLoggedUser(MOCK_SESSION, function(error, payload) {
       should.not.exist(error);
-      var data = JSON.parse(payload);
+      const data = JSON.parse(payload);
       data.should.eql(mockResponse);
       server.done();
       done();
@@ -57,10 +37,7 @@ describe('when calling DataService.getLoggedUser', function () {
 describe('when calling DataService.createDataRequest', function () {
 
   it('should return the right request options', function () {
-    var service = getSampleService();
-    var mockSession = getMockSession();
-
-    var apiRequestOptions = service.createDataRequest(mockSession, 'testResource');
+    const apiRequestOptions = SAMPLE_SERVICE.createDataRequest(MOCK_SESSION, 'testResource');
 
     should.exist(apiRequestOptions);
     // URL is correct

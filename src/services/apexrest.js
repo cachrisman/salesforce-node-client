@@ -4,13 +4,13 @@
 */
 
 // Dependencies
-var httpClient = require("request");
+const httpClient = require("request");
 
 
 /**
 *  Instantiates Force.com apex REST service
 */
-var ApexRestService = function () {
+const ApexRestService = function () {
 };
 
 /**
@@ -19,7 +19,7 @@ var ApexRestService = function () {
 *  @resourceUrlSuffix a string with the URL suffix describing the resource queried (eg: Account/...)
 **/
 ApexRestService.prototype.createApexRequest = function (authSession, resourceUrlSuffix) {
-  var requestOptions = {
+  const requestOptions = {
     url : buildApiUrl(authSession, resourceUrlSuffix)
   }
   authorizeRequest(authSession, requestOptions);

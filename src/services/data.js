@@ -4,7 +4,7 @@
 */
 
 // Dependencies
-var httpClient = require("request");
+const httpClient = require("request");
 
 
 // Service configuration
@@ -16,11 +16,7 @@ var config = null;
 *  @configuration should contain:
 *    apiVersion: Force.com API version
 */
-var DataService = function (configuration) {
-  if (!configuration)
-    throw new Error('Missing configuration for Salesforce Data service');
-  if (!configuration.apiVersion)
-    throw new Error('Missing configuration for Salesforce Data service: apiVersion');
+const DataService = function (configuration) {
   config = configuration;
 };
 
@@ -30,7 +26,7 @@ var DataService = function (configuration) {
 *  @callback function called back with user data
 */
 DataService.prototype.getLoggedUser = function (authSession, callback) {
-  var requestOptions = {
+  const requestOptions = {
     method: 'GET',
     url: authSession.id
   };
@@ -46,7 +42,7 @@ DataService.prototype.getLoggedUser = function (authSession, callback) {
 *  @resourceUrlSuffix a string with the URL suffix describing the resource queried (eg: query, account...)
 **/
 DataService.prototype.createDataRequest = function (authSession, resourceUrlSuffix) {
-  var requestOptions = {
+  const requestOptions = {
     url : buildApiUrl(authSession, resourceUrlSuffix)
   }
   authorizeRequest(authSession, requestOptions);

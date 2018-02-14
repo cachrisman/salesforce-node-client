@@ -1,24 +1,21 @@
-var should = require('should'),
-  _ = require('underscore'),
+const should = require('should'),
   nock = require('nock');
 
-var ApexRestService = require('../../src/services/apexrest');
+const ApexRestService = require('../../src/services/apexrest');
 
-function getSampleService() {
-  return new ApexRestService();
-}
-
-function getMockSession() {
-  return {id: 'https://domain/testId', instance_url: 'testInstanceUrl', access_token: 'testAccessTocken', apiVersion: 'testApiVersion'};
-}
+// Shared test data
+const SAMPLE_SERVICE = new ApexRestService();
+const MOCK_SESSION =  {
+  id: 'https://testDomain.com/testId',
+  instance_url: 'testInstanceUrl',
+  access_token: 'testAccessTocken',
+  apiVersion: 'testApiVersion'
+};
 
 describe('when calling ApexRestService.createApexRequest', function () {
 
   it('should return the right request options', function () {
-    var service = getSampleService();
-    var mockSession = getMockSession();
-
-    var apiRequestOptions = service.createApexRequest(mockSession, 'testResource');
+    const apiRequestOptions = SAMPLE_SERVICE.createApexRequest(MOCK_SESSION, 'testResource');
 
     should.exist(apiRequestOptions);
     // URL is correct
