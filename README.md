@@ -226,6 +226,10 @@ httpClient.get(apiRequestOptions, function (error, payload) {
 
 ## Changelog
 
+### v1.2.1
+- Added error when apiVersion does not start with letter v
+- Set default `Content-Type=application/json` for data requests
+
 ### v1.2.0
 v1.2.x is backward compatible with v1.1.x but drops support for Node 5
 
