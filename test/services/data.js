@@ -47,5 +47,8 @@ describe('when calling DataService.createDataRequest', function () {
     should.exist(apiRequestOptions.headers);
     should.exist(apiRequestOptions.headers.Authorization);
     apiRequestOptions.headers.Authorization.should.eql('Bearer testAccessTocken');
+    // Content-Type is application/json
+    should.exist(apiRequestOptions.headers['Content-Type']);
+    apiRequestOptions.headers['Content-Type'].should.eql('application/json');
   });
 });

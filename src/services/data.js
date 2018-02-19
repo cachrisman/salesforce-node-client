@@ -28,10 +28,7 @@ const DataService = function (configuration) {
 DataService.prototype.getLoggedUser = function (authSession, callback) {
   const requestOptions = {
     method: 'GET',
-    url: authSession.id,
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    url: authSession.id
   };
   authorizeRequest(authSession, requestOptions);
   httpClient(requestOptions, function(error, payload) {
@@ -46,7 +43,10 @@ DataService.prototype.getLoggedUser = function (authSession, callback) {
 **/
 DataService.prototype.createDataRequest = function (authSession, resourceUrlSuffix) {
   const requestOptions = {
-    url : buildApiUrl(authSession, resourceUrlSuffix)
+    url : buildApiUrl(authSession, resourceUrlSuffix),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }
   authorizeRequest(authSession, requestOptions);
   return requestOptions;
