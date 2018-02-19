@@ -138,7 +138,7 @@ The, once the authentication is completed:
 sfdc.auth.authenticate({'code': request.query.code}, function(error, payload) {
 	// Store the payload content in a server-side session
 	// Redirect your user to your app's home page
-}
+});
 ```
 
 The `authenticate` response `payload` is an object with the following format:
@@ -163,7 +163,7 @@ sfdc.auth.password({
 }, function(error, payload) {
 	// Store the payload content in a server-side session
 	// Do something
-}
+});
 ```
 
 
@@ -173,7 +173,7 @@ You may log out a user of your application by revoking his access token `accessT
 // Revokes your user's access to Salesforce
 sfdc.auth.revoke({'token': accessToken}, function(error) {
 	// Do something
-}
+});
 ```
 **Important:** revoking a user's access token logs the user out of your application but not Salesforce.
 
@@ -201,7 +201,7 @@ var apiRequestOptions = sfdc.data.createDataRequest(sfdcSession, 'query?q='+ que
 // Send an HTTP GET request with our options
 httpClient.get(apiRequestOptions, function (error, payload) {
 	// Do something
-}
+});
 ```
 
 #### Retrieving the currently logged user
@@ -210,7 +210,7 @@ As a convenience, you can retrieve the currently logged in user with this call:
 // Request logged user info
 sfdc.data.getLoggedUser(sfdcSession, function (error, userData) {
 	// Do something
-}
+});
 ```
 
 ### Interacting with Apex REST resources
@@ -221,7 +221,7 @@ var apiRequestOptions = sfdc.apex.createApexRequest(sfdcSession, 'MyCustomApexRe
 // Send an HTTP GET request with our options
 httpClient.get(apiRequestOptions, function (error, payload) {
 	// Do something
-}
+});
 ```
 
 ## Changelog
