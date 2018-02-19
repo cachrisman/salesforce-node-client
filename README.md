@@ -11,8 +11,8 @@
 	- Authenticating
 	- Interacting with Salesforce data
 	- Interacting with Apex REST resources
-- [Changelog](#changelog)
-  - v1.2.0
+- [Changelog](../../releases)
+
 
 # About
 Node.js client library for the Salesforce Platform.
@@ -223,16 +223,3 @@ httpClient.get(apiRequestOptions, function (error, payload) {
 	// Do something
 });
 ```
-
-## Changelog
-
-### v1.2.1
-- Added error when apiVersion does not start with letter v
-- Set default `Content-Type=application/json` for data requests
-
-### v1.2.0
-v1.2.x is backward compatible with v1.1.x but drops support for Node 5
-
-Changes:
-- Added new configuration options (flat configuration object or environment variable configuration)
-- Added Travis CI tests running on Node 7 to 9
