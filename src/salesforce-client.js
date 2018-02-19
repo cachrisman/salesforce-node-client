@@ -24,6 +24,10 @@ const SalesforceClient = function (configuration) {
 
   assertConfigAttributesAreSet(extendedConfig, ['domain', 'callbackUrl', 'consumerKey', 'consumerSecret', 'apiVersion']);
 
+  if (extendedConfig.apiVersion.charAt(0) !== 'v') {
+    throw new Error('Salesforce client apiVersion should start with letter "v"');
+  }
+
   this.auth = new OAuth2Service(extendedConfig);
   this.data = new DataService(extendedConfig);
   this.apex = new ApexRestService();

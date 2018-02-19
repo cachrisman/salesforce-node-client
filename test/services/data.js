@@ -9,7 +9,7 @@ const MOCK_SESSION =  {
   id: 'https://testDomain.com/testId',
   instance_url: 'testInstanceUrl',
   access_token: 'testAccessTocken',
-  apiVersion: 'testApiVersion'
+  apiVersion: 'v41.0'
 };
 
 
@@ -42,7 +42,7 @@ describe('when calling DataService.createDataRequest', function () {
     should.exist(apiRequestOptions);
     // URL is correct
     should.exist(apiRequestOptions.url);
-    apiRequestOptions.url.should.eql('testInstanceUrl/services/data/testApiVersion/testResource');
+    apiRequestOptions.url.should.eql('testInstanceUrl/services/data/v41.0/testResource');
     // Request is signed
     should.exist(apiRequestOptions.headers);
     should.exist(apiRequestOptions.headers.Authorization);

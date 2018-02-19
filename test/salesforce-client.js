@@ -18,7 +18,7 @@ describe('when building SalesforceClient', function () {
           consumerSecret: 'testConsumerSecret'
         },
         data: {
-          apiVersion: 'testApiVersion'
+          apiVersion: 'v41.0'
         }
       };
 
@@ -31,7 +31,7 @@ describe('when building SalesforceClient', function () {
         callbackUrl: 'testCallbackUrl',
         consumerKey: 'testConsumerKey',
         consumerSecret: 'testConsumerSecret',
-        apiVersion: 'testApiVersion'
+        apiVersion: 'v41.0'
       };
 
       new SalesforceClient(config);
@@ -42,9 +42,23 @@ describe('when building SalesforceClient', function () {
       process.env.callbackUrl = 'testCallbackUrl';
       process.env.consumerKey = 'testConsumerKey';
       process.env.consumerSecret = 'testConsumerSecret';
-      process.env.apiVersion = 'testApiVersion';
+      process.env.apiVersion = 'v41.0';
 
       new SalesforceClient();
+    });
+
+    it('should error if apiVersion does not start with letter v', function () {
+      (function() {
+        const config = {
+          domain: 'https://testDomain.com',
+          callbackUrl: 'testCallbackUrl',
+          consumerKey: 'testConsumerKey',
+          consumerSecret: 'testConsumerSecret',
+          apiVersion: 'testApiVersion'
+        };
+
+        new SalesforceClient(config);
+      }).should.throw('Salesforce client apiVersion should start with letter "v"');
     });
 
 
