@@ -28,7 +28,10 @@ const DataService = function (configuration) {
 DataService.prototype.getLoggedUser = function (authSession, callback) {
   const requestOptions = {
     method: 'GET',
-    url: authSession.id
+    url: authSession.id,
+    headers: {
+      'Content-Type': 'application/json'
+    }
   };
   authorizeRequest(authSession, requestOptions);
   httpClient(requestOptions, function(error, payload) {
