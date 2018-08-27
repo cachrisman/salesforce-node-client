@@ -28,8 +28,5 @@
   "bugs": {
     "url": "https://github.com/pozil/salesforce-node-client/issues"
   },
-  "homepage": "https://github.com/pozil/salesforce-node-client",
-  "engines": {
-    "node": "6.2.x"
-  }
+  "homepage": "https://github.com/pozil/salesforce-node-client"
 }
